@@ -2,228 +2,235 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flappy Bird with Chests</title>
-    <style>
-        body {
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #FFE6AD;
-            color: #004418;
-            font-family: Arial, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flappy Bird with Chests</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #212738;
+      color: #FFE6AD;
+      font-family: Arial, sans-serif;
+    }
 
-        .game-container {
-            text-align: center;
-            width: 80%;
-            max-width: 500px;
-        }
+    .game-container {
+      text-align: center;
+      width: 80%;
+      max-width: 500px;
+    }
 
-        h1 {
-            margin-bottom: 20px;
-            font-size: 18px;
-        }
+    h1 {
+      margin-bottom: 20px;
+      font-size: 18px;
+    }
 
-        canvas {
-            border: 3px solid black;
-            border-radius: 7px;
-            box-shadow: 10px 10px;
-            display: block;
-            margin: 0 auto;
-            width: 100%;
-            height: auto;
-        }
+    canvas {
+      border: 3px solid black;
+      border-radius: 7px;
+      box-shadow: 10px 10px #fff4da;
+      display: block;
+      margin: 0 auto;
+      width: 100%;
+      height: auto;
+      background-color: #FFE6AD;
+    }
 
-        button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
 
-            background-color: #F7C349;
-            color: #004418;
-            border-radius: 25px;
-            box-shadow: 2px 2px;
-        }
-    </style>
+      background-color: #ffdd8c;
+      color: #212738;
+      border-radius: 25px;
+      box-shadow: 3px 3px #fff4da;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="game-container">
-        <h1>Hey, This is Krishna AL. My portfolio page is currently being built. While you wait, try out my game</h1>
-        <canvas id="gameCanvas"></canvas>
-        <button id="newGameButton">New Game</button>
-        <p id="countdown" style="font-size: 20px; margin-top: 10px;"></p>
-    </div>
+  <div class="game-container">
+    <h1>Hey, This is Krishna AL. My portfolio page is currently being built. While you wait, try out my game</h1>
+    <canvas id="gameCanvas"></canvas>
+    <button id="newGameButton">New Game</button>
+    <p id="countdown" style="font-size: 20px; margin-top: 10px;"></p>
+  </div>
 
-    <script>
-        const canvas = document.getElementById("gameCanvas");
-        const ctx = canvas.getContext("2d");
+  <script>
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
 
-        function resizeCanvas() {
-            canvas.width = Math.min(window.innerWidth * 0.8, 500); // 80% width, max 500px
-            canvas.height = canvas.width * 1.5; // Maintain a 3:2 aspect ratio
-        }
-        resizeCanvas();
-        window.addEventListener("resize", resizeCanvas);
+    function resizeCanvas() {
+      canvas.width = Math.min(window.innerWidth * 0.8, 500); // 80% width, max 500px
+      canvas.height = canvas.width * 1.5; // Maintain a 3:2 aspect ratio
+    }
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
 
-        let gravity = canvas.height / 1500; // Slower falling
-        let jumpForce = -canvas.height / 75; // Higher jump
+    let gravity = canvas.height / 1500; // Slower falling
+    let jumpForce = -canvas.height / 75; // Higher jump
 
 
-        console.log(gravity, jumpForce)
-        // const gravity = 0.4;
-        // const jumpForce = -8;
+    console.log(gravity, jumpForce)
+    // const gravity = 0.4;
+    // const jumpForce = -8;
 
-        const bird = {
-            x: 50,
-            y: canvas.height / 2,
-            width: 20,
-            height: 20,
-            dy: 0
-        };
+    const bird = {
+      x: 50,
+      y: canvas.height / 2,
+      width: 20,
+      height: 20,
+      dy: 0
+    };
 
-        let score = 0;
-        let chests = [];
-        let gameOver = false;
-        let gameStarted = false;
-        const countdownElement = document.getElementById("countdown");
+    let score = 0;
+    let chests = [];
+    let gameOver = false;
+    let gameStarted = false;
+    const countdownElement = document.getElementById("countdown");
 
-        function createChest() {
-            const chest = {
-                x: canvas.width,
-                y: Math.random() * (canvas.height - 50),
-                size: 20,
-                speed: canvas.width / 200, // Scaled chest speed
-                operation: Math.random() > 0.5 ? "add" : "subtract",
-                value: Math.floor(Math.random() * 10) + 1
-            };
-            chests.push(chest);
-        }
+    function createChest() {
+      const chest = {
+        x: canvas.width,
+        y: Math.random() * (canvas.height - 50),
+        size: 20,
+        speed: canvas.width / 200, // Scaled chest speed
+        operation: Math.random() > 0.5 ? "add" : "subtract",
+        value: Math.floor(Math.random() * 10) + 1
+      };
+      chests.push(chest);
+    }
 
-        function drawBird() {
-            ctx.fillStyle = "yellow";
-            ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
-        }
+    function drawBird() {
+      ctx.fillStyle = "#212738";
+      ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
+    }
 
-        function drawChests() {
-            chests.forEach(chest => {
-                ctx.fillStyle = chest.operation === "add" ? "green" : "red";
-                ctx.fillRect(chest.x, chest.y, chest.size, chest.size);
-            });
-        }
+    function drawChests() {
+      chests.forEach(chest => {
+        ctx.fillStyle = chest.operation === "add" ? "#57C4E5" : "#F97068";
+        ctx.fillRect(chest.x, chest.y, chest.size, chest.size);
+      });
+    }
 
-        function drawScore() {
-            ctx.fillStyle = "black";
-            ctx.font = "20px Arial";
-            ctx.fillText(`Score: ${score}`, 20, 30);
-        }
+    function drawScore() {
+      ctx.fillStyle = "black";
+      ctx.font = "20px Arial";
+      ctx.fillText(`Score: ${score}`, 20, 30);
+    }
 
-        function updateChests() {
-            chests.forEach((chest, index) => {
-                chest.x -= chest.speed;
+    function updateChests() {
+      chests.forEach((chest, index) => {
+        chest.x -= chest.speed;
 
-                // Check collision with bird
-                if (
-                    bird.x < chest.x + chest.size &&
-                    bird.x + bird.width > chest.x &&
-                    bird.y < chest.y + chest.size &&
-                    bird.y + bird.height > chest.y
-                ) {
-                    if (chest.operation === "add") {
-                        score += chest.value;
-                    } else {
-                        score -= chest.value;
-                    }
-                    chests.splice(index, 1);
-                }
-
-                // Remove chest if it goes off-screen
-                if (chest.x + chest.size < 0) {
-                    chests.splice(index, 1);
-                }
-            });
+        // Check collision with bird
+        if (
+          bird.x < chest.x + chest.size &&
+          bird.x + bird.width > chest.x &&
+          bird.y < chest.y + chest.size &&
+          bird.y + bird.height > chest.y
+        ) {
+          if (chest.operation === "add") {
+            score += chest.value;
+          } else {
+            score -= chest.value;
+          }
+          chests.splice(index, 1);
         }
 
-        function resetGame() {
-            bird.y = canvas.height / 2;
-            bird.dy = 0;
-            score = 0;
-            chests = [];
-            gameOver = false;
+        // Remove chest if it goes off-screen
+        if (chest.x + chest.size < 0) {
+          chests.splice(index, 1);
         }
+      });
+    }
 
-        function gameLoop() {
-            if (gameOver) return;
+    function resetGame() {
+      bird.y = canvas.height / 2;
+      bird.dy = 0;
+      score = 0;
+      chests = [];
+      gameOver = false;
+    }
 
-            // Clear canvas
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+    function gameLoop() {
+      if (gameOver) return;
 
-            // Update bird
-            bird.dy += gravity;
-            bird.y += bird.dy;
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Check if bird hits the ground or top
-            if (bird.y + bird.height > canvas.height || bird.y < 0) {
-                gameOver = true;
-                alert("Game Over! Your score: " + score);
-                return;
-            }
+      // Update bird
+      bird.dy += gravity;
+      bird.y += bird.dy;
 
-            // Draw everything
-            drawBird();
-            drawChests();
-            drawScore();
+      // Check if bird hits the ground or top
+      if (bird.y + bird.height > canvas.height || bird.y < 0) {
+        gameOver = true;
+        alert("Game Over! Your score: " + score);
+        return;
+      }
 
-            // Update chests
-            updateChests();
+      // Draw everything
+      drawBird();
+      drawChests();
+      drawScore();
 
-            requestAnimationFrame(gameLoop);
+      // Update chests
+      updateChests();
+
+      requestAnimationFrame(gameLoop);
+    }
+
+    function startCountdown(callback) {
+      let count = 3;
+      countdownElement.textContent = `Starting in ${count}...`;
+      const interval = setInterval(() => {
+        count--;
+        if (count > 0) {
+          countdownElement.textContent = `Starting in ${count}...`;
+        } else {
+          clearInterval(interval);
+          countdownElement.textContent = "";
+          callback();
         }
+      }, 1000);
+    }
 
-        function startCountdown(callback) {
-            let count = 3;
-            countdownElement.textContent = `Starting in ${count}...`;
-            const interval = setInterval(() => {
-                count--;
-                if (count > 0) {
-                    countdownElement.textContent = `Starting in ${count}...`;
-                } else {
-                    clearInterval(interval);
-                    countdownElement.textContent = "";
-                    callback();
-                }
-            }, 1000);
+    // Start a new game
+    document.getElementById("newGameButton").addEventListener("click", () => {
+      this.blur();
+      resetGame();
+      startCountdown(() => {
+        gameStarted = true;
+        // gravity = canvas.height / 300;
+        // jumpForce = -canvas.height / 50;
+        gameLoop();
+        setInterval(() => {
+          if (gameStarted) createChest();
+        }, 1500);
+      });
+    });
+
+    // Listen for key presses to make the bird jump
+    window.addEventListener("keydown", () => {
+      // event.preventDefault();
+
+        // Check if the currently focused element is not the new game button
+        if (document.activeElement !== document.getElementById("newGameButton")) {
+            bird.dy = jumpForce;
         }
+    });
 
-        // Start a new game
-        document.getElementById("newGameButton").addEventListener("click", () => {
-            resetGame();
-            startCountdown(() => {
-                gameStarted = true;
-                // gravity = canvas.height / 300;
-                // jumpForce = -canvas.height / 50;
-                gameLoop();
-                setInterval(() => {
-                    if (gameStarted) createChest();
-                }, 1500);
-            });
-        });
-
-        // Listen for key presses to make the bird jump
-        window.addEventListener("keydown", () => {
-            if (!gameOver && gameStarted) bird.dy = jumpForce;
-        });
-
-        // Listen for touch events to make the bird jump (for mobile devices)
-        window.addEventListener("touchstart", () => {
-            if (!gameOver && gameStarted) bird.dy = jumpForce;
-        });
-    </script>
+    // Listen for touch events to make the bird jump (for mobile devices)
+    window.addEventListener("touchstart", () => {
+      if (!gameOver && gameStarted) bird.dy = jumpForce;
+    });
+  </script>
 </body>
 
 </html>
