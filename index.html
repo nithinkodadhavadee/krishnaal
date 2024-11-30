@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flappy Bird with Chests</title>
   <style>
@@ -14,7 +15,7 @@
       height: 100vh;
       background-color: #212738;
       color: #FFE6AD;
-      font-family: Arial, sans-serif;
+      font-family: 'Space Mono', monospace;
     }
 
     .game-container {
@@ -24,8 +25,9 @@
     }
 
     h1 {
+      margin-top: 20px;
       margin-bottom: 20px;
-      font-size: 18px;
+      font-size: 16px;
     }
 
     canvas {
@@ -42,23 +44,25 @@
     button {
       margin-top: 20px;
       padding: 10px 20px;
-      font-size: 16px;
+      font-size: 12px;
       cursor: pointer;
 
       background-color: #ffdd8c;
       color: #212738;
       border-radius: 25px;
       box-shadow: 3px 3px #fff4da;
+
+      font-family: 'Space Mono', monospace;
     }
   </style>
 </head>
 
 <body>
   <div class="game-container">
-    <h1>Hey, This is Krishna AL. My portfolio page is currently being built. While you wait, try out my game</h1>
+    <h1>Hey, This is Krishna AL. My portfolio page is currently being built. While you wait, kindly occupy yourself with this tiny game.</h1>
     <canvas id="gameCanvas"></canvas>
     <button id="newGameButton">New Game</button>
-    <p id="countdown" style="font-size: 20px; margin-top: 10px;"></p>
+    <p id="countdown" style="margin-top: 10px;"></p>
   </div>
 
   <script>
@@ -220,10 +224,10 @@
     window.addEventListener("keydown", () => {
       // event.preventDefault();
 
-        // Check if the currently focused element is not the new game button
-        if (document.activeElement !== document.getElementById("newGameButton")) {
-            bird.dy = jumpForce;
-        }
+      // Check if the currently focused element is not the new game button
+      if (document.activeElement !== document.getElementById("newGameButton")) {
+        bird.dy = jumpForce;
+      }
     });
 
     // Listen for touch events to make the bird jump (for mobile devices)
